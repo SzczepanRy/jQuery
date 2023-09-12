@@ -6,10 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="./lib/jq.js"></script>
+    <script>
+        $(document).ready(() => {
+            let top = 30
+            let left = 10
+            $("#reset").on("click", () => {
+                console.log("run")
+                top = 30
+                left = 10
+                $(".div")
+                    .css('top', `${top}px`)
+                    .css('left', `${left}px`)
+            })
+            $(".div").on("click", () => {
+                top = top + 50
+                left = left + 50
+                $(".div")
+                    .css('top', `${top}px`)
+                    .css('left', `${left}px`)
+            })
+
+        })
+    </script>
+    <style>
+        .div {
+            height: 300px;
+            width: 300px;
+            position: absolute;
+            background-color: gray;
+        }
+    </style>
 </head>
 
 <body>
-
+    <button id="reset">reset</button>
+    <div class="div"></div>
 </body>
 
 </html>
