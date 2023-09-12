@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/jq.js"></script>
+    <script>
+        $(document).ready(() => {
+            $("#title").text("text")
+            $("#title2").html("<i>text</i>")
+            //
+
+
+            let isOn = false
+            $("#bt2").on("click", () => {
+                if (isOn) {
+                    $("#bt1").off("click")
+                    isOn = false
+                } else if (!isOn) {
+                    $("#bt1").on("click", () => {
+                        let prevData = $("#h2").text()
+                        $("#h2").text(prevData + ", appended")
+                    })
+                    isOn = true
+                }
+            })
+            //
+
+            let isOnSquare = true
+            $(".square").on("click", () => {
+                console.log(isOnSquare)
+
+                if (isOnSquare) {
+                    $(".square").on("mouseover", () => {
+                        $(".square").css("background", "red")
+                    })
+
+                    $(".square").on("mouseout", () => {
+                        $(".square").css("background", "gray")
+                    })
+                    isOnSquare = false
+                } else if (!isOnSquare) {
+
+                    $(".square").off("mouseover")
+                    isOnSquare = true
+                }
+            })
+
+            //
+            //$("#div1").attr("id", "jakies_id") // ustawienie
+            //$("#div1").attr("id") // pobranie
+            //$(location).attr("href", "index2.html") // przykład z odnośnikiem -->
+            // 
+            let site = "blue"
+            $("#bt3").on("click", () => {
+                if (site === "blue") {
+                    $(".files").load("./comp/blue.html")
+                    site = "red"
+                } else if (site === "red") {
+                    $(".files").load("./comp/red.html")
+                    site = "blue"
+                }
+            })
+
+            //
+            let show = true
+            let divVal = $(".div").text()
+            $("#bt4").on("click", () => {
+                if (show) {
+                    $(".div").empty()
+                    show = false
+
+                } else if (!show) {
+
+
+                    $(".div").show().text(divVal) //weard
+                    show = true
+                }
+            })
+
+        })
+    </script>
+    <style>
+        .square {
+            height: 200px;
+            width: 200px;
+            background: grey;
+        }
+
+        .file {
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2 id="title"></h2>
+    <h2 id="title2"></h2>
+    <hr>
+    <h2 id="h2">dafault data </h2>
+    <button id="bt1">append</button>
+    <button id="bt2">disable append</button>
+    <hr>
+    <div class="square"></div>
+    <hr>
+    <button id="bt3">change</button>
+    <div class="files"></div>
+    <hr>
+    <button id="bt4">change</button>
+    <div class="div">uga buga </div>
+
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/jq.js"></script>
+    <script>
+        $(document).ready(() => {
+            let isOn = true
+            $("#bt").on("click", () => {
+                if (isOn) {
+                    $("#bt")
+                        .css("background", "red")
+                        .css("border", "black solid 2px")
+                        .css("border-radius", "10px");
+
+                    $(".square").on("mouseover", () => {
+                        $(".square")
+                            .css("background", "red")
+                            .css("color", "white")
+                            .html("<b>text bold</b>  <i>text italic</i>")
+
+                    })
+                    $(".square").on("mouseout", () => {
+                        $(".square")
+                            .css("background", "gray")
+                            .html("")
+                    })
+                    $("#title").html("bosługa zdarzeń<br> dodania")
+                    isOn = false
+                } else if (!isOn) {
+                    $("#title").html("T: jquery -<br> Zdarzenia")
+                    $(".square").off("mouseover")
+                    $("#bt")
+                        .css("background", "gray")
+                        .css("border", "none")
+                        .css("border-radius", "0px");
+                    isOn = true
+
+                }
+            })
+        })
+    </script>
+    <style>
+        .container {
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: column;
+        }
+
+        #title {
+            font-family: monospace;
+            color: blue;
+        }
+
+        #bt {
+            all: unset;
+            width: 120px;
+            height: 60px;
+            background-color: gray;
+            text-align: center;
+            font-family: monospace;
+            margin-top: 40px;
+        }
+
+        .square {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 300px;
+            height: 300px;
+            margin-top: 40px;
+            background-color: gray;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 id="title">T: jquery -<br> Zdarzenia</h1>
+        <button id="bt">dodaj / usuń</button>
+        <div class="square"></div>
+    </div>
+</body>
+
+</html>
