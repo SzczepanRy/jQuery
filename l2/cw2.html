@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jq.js"></script>
+    <script>
+        $(document).ready(() => {
+            $(".a").html("A")
+            $(".b").html("B")
+
+            $(".div").on("mousedown", (e) => {
+                $(window).on("mousemove", (e) => {
+                    let x = e.clientX
+                    //- $(".div").offset().left
+                    console.log(x);
+                    $(".b").css("width", `calc(100vw - ${x}px)`)
+                    $(".a").css("width", `calc(${x}px)`)
+
+
+
+                    $(".div").css("left", x + "px")
+                    $(".div").on("mouseup", (e) => {
+                        $(window).off()
+                    })
+                })
+
+
+            })
+
+        })
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            overflow: hidden;
+        }
+
+        .a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 124px;
+            font-weight: bold;
+            overflow: hidden;
+            background-color: gray;
+            height: 100vh;
+            width: calc(50vw);
+        }
+
+        .b {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 124px;
+            font-weight: bold;
+            overflow: hidden;
+            background-color: yellow;
+            height: 100vh;
+            width: calc(50vw);
+        }
+
+        .div {
+            background-color: blue;
+            height: 100vh;
+            width: 20px;
+            position: absolute;
+            left: 50%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="a"></div>
+    <div class="div"></div>
+    <div class="b"></div>
+</body>
+
+
+</html>
