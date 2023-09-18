@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jq.js"></script>
+    <script>
+        let num = 0
+        let height = 200;
+        let width = 200;
+        $(document).ready(() => {
+            $(".div").on("mouseover", () => {
+                num++
+                $(".div").text(num)
+                if (num % 5 === 0) {
+                    height = height * 2
+                    width = width * 2
+                    $(".div")
+                        .css("height", `${height}px`)
+                        .css("width", `${width}px`)
+
+                }
+            })
+        })
+    </script>
+    <style>
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .div {
+            background-color: gray;
+            height: 200px;
+            width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="div"></div>
+    </div>
+</body>
+
+</html>
