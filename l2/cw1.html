@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jq.js"></script>
+    <script>
+        $(document).ready(() => {
+            $("#add").on("click", () => {
+                $(".main").empty()
+                for (let i = 0; i < Number($("#select").val()); i++) {
+                    let div = $("<div>").addClass("div").text(i)
+                    $(".main").append(div)
+                    div.on("click", (e) => {
+                        let val = confirm("czy chcesz usunąć element")
+                        if (val) {
+                            e.target.remove()
+                            //or 
+                            // div.remove()
+                            //or i function () {} == $(this).remove()
+                        }
+                        console.log(val);
+
+                    })
+                }
+            })
+            $("#delete").on("click", () => {
+                $(".main").empty()
+            })
+        })
+    </script>
+    <style>
+        .div {
+            width: 200px;
+            height: 30px;
+            background-color: blue;
+            margin: 10px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Pętla for , dynamiczne tworzenie i usuwanie html-a, cz1</h1>
+    <button id="add">UTWÓRZ NOWY</button>
+    <button id="delete">USUŃ MENU</button>
+    <select id="select">
+        <option value="2">2</option>
+        <option value="4">4</option>
+        <option value="6">6</option>
+        <option value="8">8</option>
+        <option value="10">10</option>
+    </select>
+    <div class="main"></div>
+
+</body>
+
+</html>
