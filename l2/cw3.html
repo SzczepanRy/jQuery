@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jq.js"></script>
+    <script>
+        $(document).ready(() => {
+            $(".sEl").on("mousedown", () => {
+                $(window).on("mousemove", (e) => {
+                    $(".sEl").on("mouseup", () => {
+                        $(window).off("mousemove")
+                    })
+
+                    let x = e.clientX - $(".sDiv").offset().left
+                    console.log(x)
+                    if (x > 600 - $(".sDiv").offset().left + 10 || x < 0 + $(".sDiv").offset().left) {
+                        $(window).off("mousemove")
+                    } else {
+                        $(".sEl").css("left", x + "px")
+                    }
+
+                })
+                $(window).on("mouseup", () => {
+                    $(window).off("mousemove")
+                })
+            })
+            $(".sEl2").on("mousedown", () => {
+                $(window).on("mousemove", (e) => {
+                    $(".sEl2").on("mouseup", () => {
+                        $(window).off("mousemove")
+                    })
+
+                    let x = e.clientX - $(".sDiv2").offset().left
+                    console.log(x)
+                    if (x > 600 - 30 || x < 0) {
+                        $(window).off("mousemove")
+                    } else {
+                        $(".sEl2").css("left", x + "px")
+                    }
+
+                })
+                $(window).on("mouseup", () => {
+                    $(window).off("mousemove")
+                })
+            })
+
+
+        })
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0px;
+        }
+
+        body {
+            margin: 20px;
+        }
+
+        .static {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .static2 {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            left: 400px;
+        }
+
+        h1 {
+            color: blue;
+        }
+
+        h2 {
+            color: gray;
+        }
+
+        .sDiv {
+            background-color: lightgrey;
+            height: 30px;
+            width: 600px;
+        }
+
+        .sEl {
+            height: 30px;
+            width: 30px;
+            background-color: blue;
+            position: absolute;
+            left: 40px;
+        }
+
+        .sDiv2 {
+            background-color: lightgrey;
+            height: 30px;
+            width: 600px;
+        }
+
+        .sEl2 {
+            height: 30px;
+            width: 30px;
+            background-color: blue;
+            position: absolute;
+            left: 40px;
+        }
+
+        .dynamic {
+            margin-top: 50px;
+            width: 100xw;
+            height: 40px;
+            display: absolute;
+            left: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>T: zdarzenia - suwaki </h1>
+    <div class="static">
+        <h2>statyczny suwak</h2>
+        <div class="sDiv">
+            <div class="sEl"></div>
+        </div>
+    </div>
+    <div class="dynamic">
+        <div class="static2">
+            <h2>dynamiczny suwak</h2>
+            <div class="sDiv2">
+                <div class="sEl2"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
