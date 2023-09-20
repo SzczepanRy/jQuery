@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/jq.js"></script>
+    <script>
+        $(document).ready(() => {
+            $(".container").on("mousedown", () => {
+                $(window).on("mousemove", (e) => {
+                    $(".a").css("width", e.clientX + "px")
+                    $(".b").css("width", `calc(100vw  - ${e.clientX}px - 10px)`)
+                    $(".c").css("width", e.clientX + "px")
+                    $(".d").css("width", `calc(100vw  - ${e.clientX}px - 10px)`)
+
+                    $(".a").css("height", e.clientY + "px")
+                    $(".c").css("height", `calc(100vh  - ${e.clientY}px - 10px)`)
+                    $(".b").css("height", e.clientY + "px")
+                    $(".d").css("height", `calc(100vh  - ${e.clientY}px - 10px)`)
+
+
+                    $(".container").on("mouseup", () => {
+                        $(window).off()
+                    })
+                })
+            })
+        })
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        .container {
+            display: grid;
+            height: 100vh;
+            width: 100vw;
+            background-color: blue;
+            gap: 10px;
+            grid-template-columns: auto auto;
+        }
+
+        .row1 {
+            display: flex;
+            justify-content: space-between;
+            width: 100vw;
+            height: calc(50% - 10px);
+        }
+
+        .row2 {
+            width: 100vw;
+            display: flex;
+            justify-content: space-between;
+            height: calc(50% - 10px);
+        }
+
+        .b {
+            background-color: red;
+            height: 100%;
+            width: calc(50vw - 10px);
+        }
+
+        .a {
+            background-color: yellow;
+            height: 100%;
+            width: calc(50vw - 10px);
+        }
+
+        .c {
+            background-color: green;
+            height: 100%;
+            width: calc(50vw - 10px);
+        }
+
+        .d {
+            background-color: violet;
+            height: 100%;
+            width: calc(50vw - 10px);
+        }
+
+        .div {
+            height: 100vh;
+            width: 20px;
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="a"></div>
+
+        <div class="b"></div>
+
+
+        <div class="c"></div>
+
+        <div class="d"></div>
+
+
+    </div>
+
+</body>
+
+</html>
