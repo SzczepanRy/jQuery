@@ -19,24 +19,64 @@
 
                 }
             }
+            let lastEl = {
+                left: 200,
+                top: 200
+            }
+            let r = 0
             $(".el").on("click", (e) => {
                 if (e.target.style.backgroundColor !== "yellow") {
-                    $(e.target).css("background-color", "yellow")
-                    map.push({ left: parseInt(e.target.style.left.slice(0, -2)), top: parseInt(e.target.style.top.slice(0, -2)) })
-                    console.log(map);
-                    let l = (parseInt(e.target.style.left.slice(0, -2)) - 200) / 30
-                    let t = (parseInt(e.target.style.top.slice(0, -2)) - 200) / 30
 
-                    if (map[l].left - map[l + 1].left == -30 || map[l].top - map[l + 1].top == -30) {
+                    map.push({
+                        left: parseInt(e.target.style.left.slice(0, -2)),
+                        top: parseInt(e.target.style.top.slice(0, -2))
+                    });
 
+                    console.log(map[map.length - 1].left - lastEl.left)
+                    console.log(map[map.length - 1].top - lastEl.top)
+                    // console.log(map[map.length - 1].left);
+                    //let l = (parseInt(e.target.style.left.slice(0, -2)) - 200) / 30
+                    //let t = (parseInt(e.target.style.top.slice(0, -2)) - 200) / 30
+                    console.log(r)
+
+                    console.log(map[map.length - 1].left - lastEl.left)
+                    console.log(map[map.length - 1].top - lastEl.top)
+
+                    if (r == 0 ||
+                        map[map.length - 1].left - lastEl.left == -30 &&
+                        map[map.length - 1].top - lastEl.top == 0 ||
+                        map[map.length - 1].top - lastEl.top == -30 &&
+                        map[map.length - 1].left - lastEl.left == 0 ||
+                        map[map.length - 1].left - lastEl.left == 30 &&
+                        map[map.length - 1].top - lastEl.top == 0 ||
+                        map[map.length - 1].top - lastEl.top == 30 &&
+                        map[map.length - 1].left - lastEl.left == 0
+
+                    ) {
+                        console.log("aa")
+                        r++
+                        $(e.target).css("background-color", "yellow")
+
+                        if (map.length > 0) {
+                            lastEl = {
+                                left: parseInt(e.target.style.left.slice(0, -2)),
+                                top: parseInt(e.target.style.top.slice(0, -2))
+                            }
+                        }
+
+                    } else {
+                        map.pop()
+                        console.log(map[map.length - 1].left - lastEl.left)
+                        console.log(map[map.length - 1].top - lastEl.top)
+                        alert("bad position")
                     }
+
+
+
 
                 }
 
-
-
-
-            })
+            });
             $("#start").on("click", () => {
                 if (map.length == 0) {
 
