@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jq.js"></script>
+    <script>
+        $(document).ready(() => {
+            let map = []
+            for (let y = 0; y < 5; y++) {
+                for (let i = 0; i < 5; i++) {
+                    let top = y * 30 + 200
+                    let left = i * 30 + 200
+                    let div = $(`<div class="el ${i + "" + y} "></div>`).css("left", `${left}px`).css("top", `${top}px`)
+                    $(".container").append(div)
+
+                }
+            }
+            $(".el").on("click", (e) => {
+                if (e.target.style.backgroundColor !== "yellow") {
+                    $(e.target).css("background-color", "yellow")
+                    map.push({ left: parseInt(e.target.style.left.slice(0, -2)), top: parseInt(e.target.style.top.slice(0, -2)) })
+                    console.log(map);
+                    let l = (parseInt(e.target.style.left.slice(0, -2)) - 200) / 30
+                    let t = (parseInt(e.target.style.top.slice(0, -2)) - 200) / 30
+
+                    if (map[l].left - map[l + 1].left == -30 || map[l].top - map[l + 1].top == -30) {
+
+                    }
+
+                }
+
+
+
+
+            })
+            $("#start").on("click", () => {
+                if (map.length == 0) {
+
+                    alert("nie ma labirynu")
+                }
+                $(".blue").css("left", `${map[map.length - 1].left}px`).css("top", `${map[map.length - 1].top}px`)
+                $(".green").css("left", `${map[0].left}px`).css("top", `${map[0].top}px`)
+            })
+
+            let next = 1
+            let o = 0
+            $("#next").on("click", () => {
+                o++
+
+                if (o % 2 == 0) {
+                    $(".green").css("left", `${map[next].left}px`).css("top", `${map[next].top}px`)
+                    next++
+                } else {
+                    $(".blue").css("left", `${map[map.length - 1 - next].left}px`).css("top", `${map[map.length - 1 - next].top}px`)
+
+
+                }
+            })
+
+            $("#reset").on('click', () => {
+                location.reload()
+            })
+
+
+
+        })
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .el {
+            position: absolute;
+            height: 30px;
+            width: 30px;
+            border: solid black 2px;
+        }
+
+        .blue {
+            position: absolute;
+            height: 30px;
+            width: 30px;
+            background-color: blue;
+        }
+
+        .green {
+            top: 150px;
+            position: absolute;
+            height: 30px;
+            width: 30px;
+            background-color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>T: labirynt - w tabelce obiektów
+
+    </h1>
+    <button id="start">start game </button>
+    <button id="next">Next move</button>
+    <button id="reset">reset game </button>
+
+    <div class="container">
+
+    </div>
+    <div class="blue"></div>
+    <div class="green"></div>
+</body>
+
+</html>
