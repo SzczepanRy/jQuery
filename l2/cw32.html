@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jq.js"></script>
+    <script>
+        $(document).ready(() => {
+            $(".sEl").on("mousedown", () => {
+                $(window).on("mousemove", (e) => {
+                    let x = e.clientX - $(".static").offset().left
+                    console.log(x)
+                    if (x > 0 && x < 840) {
+                        $(".sDiv").css("width", x + "px")
+                        $(".eDiv").css("width", 840 - x + "px")
+                        $(".sEl").text(x)
+                    }
+
+                })
+                $(window).on("mouseup", () => {
+                    $(window).off()
+                })
+                $(".sEl").on("mouseup", () => {
+                    $(window).off()
+                })
+            })
+            $(".sEl2").on("mousedown", () => {
+                $(window).on("mousemove", (e) => {
+                    let x = e.clientX - $(".static2").offset().left
+                    console.log(x)
+                    if (x > 0 && x < 840) {
+                        $(".sDiv2").css("width", x + "px")
+                        $(".eDiv2").css("width", 840 - x + "px")
+                        $(".sEl2").text(x)
+                    }
+
+                })
+                $(window).on("mouseup", () => {
+                    $(window).off()
+                })
+                $(".sEl2").on("mouseup", () => {
+                    $(window).off()
+                })
+            })
+        })
+    </script>
+    <style>
+        .static {
+            display: flex;
+            width: 840px;
+        }
+
+        .static2 {
+            margin-left: 200px;
+            display: flex;
+            width: 840px;
+        }
+
+        .sDiv2 {
+            width: 400px;
+            height: 40px;
+            background-color: gray;
+        }
+
+        .eDiv2 {
+            width: 400px;
+            height: 40px;
+            background-color: gray;
+        }
+
+        .sEl2 {
+            color: wheat;
+            position: relative;
+            height: 40px;
+            width: 40px;
+            background-color: blue;
+        }
+
+        .sDiv {
+            width: 400px;
+            height: 40px;
+            background-color: gray;
+        }
+
+        .eDiv {
+            width: 400px;
+            height: 40px;
+            background-color: gray;
+        }
+
+        .sEl {
+            color: wheat;
+            position: relative;
+            height: 40px;
+            width: 40px;
+            background-color: blue;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>T ;zdatrzneia </h1>
+    <div class="container">
+        <div class="static">
+
+
+            <div class="sDiv"></div>
+            <div class="sEl"></div>
+            <div class="eDiv"></div>
+
+        </div>
+        <br>
+        <div class="static2">
+
+
+            <div class="sDiv2"></div>
+            <div class="sEl2"></div>
+            <div class="eDiv2"></div>
+
+        </div>
+    </div>
+</body>
+
+</html>
