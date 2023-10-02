@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jq.js"></script>
+    <script>
+        $(document).ready(() => {
+            let arr = []
+            let currentI = 0
+            $(".container").on("click", (e) => {
+                let obj = { "left": e.clientX - 20, "top": e.clientY - 20 }
+                arr.push(obj)
+                console.log(arr);
+                $(".container").append(`<img style="position:absolute; top:${e.clientY - 20}px;left:${e.clientX - 20}px; height:40px; width:40px; "src='./ateoroid.png' >`)
+            })
+            $("#steps").on("click", () => {
+
+                if (arr.length - 1 < currentI) currentI = 0;
+                console.log(arr[currentI].left, arr[currentI].top);
+                $("#rocket").css("top", `${arr[currentI].top}px`)
+
+                $("#rocket").css("left", `${arr[currentI].left}px`)
+                currentI++
+            })
+            let works = false
+            let ex = false
+            $("#jumping").on("click", () => {
+                if (!ex) {
+                    setInterval(() => {
+
+                        if (arr.length - 1 < currentI) currentI = 0;
+                        console.log(arr[currentI].left, arr[currentI].top);
+                        $("#rocket").css("top", `${arr[currentI].top}px`)
+
+                        $("#rocket").css("left", `${arr[currentI].left}px`)
+                        currentI++
+                    }, 400)
+                    ex = !ex
+                }
+            })
+
+
+
+
+
+
+
+
+            let flyI = 0
+            let i = 0
+            $("#fly").on("click", () => {
+                let diffL = arr[flyI].left
+                let diffT = arr[flyI].top
+                let stepL = (arr[flyI + 1].left - arr[flyI].left) / 10
+                let stepT = (arr[flyI + 1].top - arr[flyI].top) / 10
+                if (diffL !== 0 && diffT !== 0) {
+
+                    //function animateRocket(start) {
+
+                    //      if (start) {
+
+                    setInterval(() => {
+                        console.log("przemieszczanie rakiety")
+
+
+
+                        console.log(diffL, diffT);
+                        $("#rocket").css('top', (diffT += stepT) + "px")
+                        $("#rocket").css('left', (diffL += stepL) + "px")
+                        if (diffT >= arr[flyI + 1].top && diffL >= arr[flyI + 1].left) {
+                            console.log("aaaa");
+                            flyI++
+                            diffL = arr[flyI].left
+                            diffT = arr[flyI].top
+                            stepL = (arr[flyI + 1].left - arr[flyI].left) / 10
+                            stepT = (arr[flyI + 1].top - arr[flyI].top) / 10
+                        }
+                    }, 200)
+
+                    /// tablice 
+                    ///mysz poxycji
+
+
+
+                    //      }
+
+                    //      requestAnimationFrame(animateRocket)
+                    //        }
+                    //
+                    //     animateRocket(true)
+                }
+
+            })
+
+        })
+    </script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+
+            display: flex;
+        }
+
+        .container {
+            background-color: blue;
+            width: 80vw;
+            height: 100vh;
+        }
+
+        .aside {
+            width: 20vw;
+            height: 100vh;
+        }
+
+        #rocket {
+            z-index: 200;
+            position: absolute;
+            height: 40px;
+            width: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <img id="rocket" src=" ./rocket.png" alt="rck">
+    </div>
+    <aside class="aside">
+        <button id="steps">steps</button>
+        <button id="jumping">Jumping</button>
+        <button id="fly">fly</button>
+        <input type="checkbox" id="kierunek" name="kierunek">
+        <label for="kierunek">kierunek lotu</label>
+    </aside>
+</body>
+
+</html>
