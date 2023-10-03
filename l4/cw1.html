@@ -12,7 +12,10 @@
             let arr = []
             let currentI = 0
             $(".container").on("click", (e) => {
-                let obj = { "left": e.clientX - 20, "top": e.clientY - 20 }
+                let obj = {
+                    "left": e.clientX - 20,
+                    "top": e.clientY - 20
+                }
                 arr.push(obj)
                 console.log(arr);
                 $(".container").append(`<img style="position:absolute; top:${e.clientY - 20}px;left:${e.clientX - 20}px; height:40px; width:40px; "src='./ateoroid.png' >`)
@@ -55,44 +58,38 @@
             $("#fly").on("click", () => {
                 let diffL = arr[flyI].left
                 let diffT = arr[flyI].top
-                let stepL = (arr[flyI + 1].left - arr[flyI].left) / 10
-                let stepT = (arr[flyI + 1].top - arr[flyI].top) / 10
-                if (diffL !== 0 && diffT !== 0) {
+                let stepL = (arr[flyI + 1].left - arr[flyI].left) / 100
+                let stepT = (arr[flyI + 1].top - arr[flyI].top) / 100
+                setInterval(() => {
+                    i++
+                    if (i == 100) {
+                        flyI++
+                        i = 0
+                        stepL = 0
+                        stepT = 0
+                    }
+                    if (flyI == arr.length - 1) {
+                        $("#rocket").css("top", `${arr[flyI].top + stepT}px`);
 
-                    //function animateRocket(start) {
+                        $("#rocket").css("left", `${arr[flyI].left + stepL}px`);
+                        stepL += (arr[0].left - arr[flyI].left) / 100;
+                        stepT += (arr[0].top - arr[flyI].top) / 100;
 
-                    //      if (start) {
-
-                    setInterval(() => {
-                        console.log("przemieszczanie rakiety")
-
-
-
-                        console.log(diffL, diffT);
-                        $("#rocket").css('top', (diffT += stepT) + "px")
-                        $("#rocket").css('left', (diffL += stepL) + "px")
-                        if (diffT >= arr[flyI + 1].top && diffL >= arr[flyI + 1].left) {
-                            console.log("aaaa");
-                            flyI++
-                            diffL = arr[flyI].left
-                            diffT = arr[flyI].top
-                            stepL = (arr[flyI + 1].left - arr[flyI].left) / 10
-                            stepT = (arr[flyI + 1].top - arr[flyI].top) / 10
+                        if (i == 99) {
+                            flyI = -1
                         }
-                    }, 200)
+                    } else {
 
-                    /// tablice 
-                    ///mysz poxycji
+                        $("#rocket").css("top", `${arr[flyI].top + stepT}px`);
 
+                        $("#rocket").css("left", `${arr[flyI].left + stepL}px`);
+                        stepL += (arr[flyI + 1].left - arr[flyI].left) / 100;
+                        stepT += (arr[flyI + 1].top - arr[flyI].top) / 100;
 
+                    }
 
-                    //      }
+                }, 10)
 
-                    //      requestAnimationFrame(animateRocket)
-                    //        }
-                    //
-                    //     animateRocket(true)
-                }
 
             })
 
@@ -107,7 +104,6 @@
         }
 
         body {
-
             display: flex;
         }
 

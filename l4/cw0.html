@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jq.js"></script>
+    <script>
+        let lps = ["lp", "cena", "produkt"]
+        let ceny = ["5,60", "3,23", "7,45", "10,00", "3,20", "3,20", "3,20", "3,20"]
+        let produkty = ["chleb", "mąka", "masło", "kefir", "dżem", "dżem", "dżem", "dżem"]
+
+        $(document).ready(() => {
+
+            $(".button").on("click", () => {
+                $(".table").empty()
+                let tr = $("<tr>")
+                for (let el of lps) {
+                    tr.append(`<td>${el}</td>`)
+
+                }
+                $(".table").append(tr)
+                for (let i = 0; i < produkty.length + 1; i++) {
+
+                    if (i < produkty.length) {
+                        let tr = $("<tr>").append(`<td>${i + 1}</td><td>${ceny[i]}</td><td>${produkty[i]}</td>`)
+                        $(".table").append(tr)
+                    } else if (i == produkty.length) {
+                        let suma = 0
+                        for (let el of ceny) {
+                            console.log(el)
+                            suma += parseFloat(el)
+                        }
+
+                        let tr = $("<tr>").append(`<td> suma </td><td colspan="2">${suma}</td>`)
+                        $(".table").append(tr)
+
+                    }
+
+
+
+
+                }
+
+            })
+        })
+    </script>
+    <style>
+        td {
+            border: 1px solid gray;
+            margin: 2px;
+        }
+
+        .table {
+            border: 1px solid gray;
+            padding: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>tablice</h1>
+
+    <div class="container">
+        <button class="button">make table</button>
+        <table class="table">
+
+        </table>
+    </div>
+</body>
+
+</html>
