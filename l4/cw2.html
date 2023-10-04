@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/jq.js"></script>
+
+    <script>
+        $(document).ready(() => {
+            $("#circle").on("click", () => {
+                $(".circleBox").empty()
+                console.log("aa")
+                let wiel = $("#wiel").val()
+                let ilo = $("#ilo").val()
+                let pro = $("#pro").val()
+                wiel = Number(wiel)
+                ilo = Number(ilo)
+                pro = Number(pro)
+                let lol = 0
+                for (let i = 0; i < ilo; i++) {
+                    let x = Math.cos(lol * (Math.PI / 180)) * pro;
+                    let y = Math.sin(lol * (Math.PI / 180)) * pro;
+                    console.log(x, y)
+                    lol += 360 / ilo
+                    $(".circleBox").append(`<div class="point" style="height:${wiel}px; width:${wiel}px; border-radius:${wiel / 2}px; top:calc( 50vh - ${y + (wiel / 2)}px); left:calc( 50vw - ${x + (wiel / 2)}px);"></div>`)
+                }
+            })
+        })
+    </script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+        }
+
+        .controls {
+            width: 400px;
+            position: absolute;
+        }
+
+        .point {
+            position: absolute;
+            background-color: rgba(255, 0, 0, 0.5);
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .x {
+            position: absolute;
+            width: 100vw;
+            height: 2px;
+            background-color: black;
+            top: calc(50vh - 1px);
+        }
+
+        .y {
+            position: absolute;
+            width: 2px;
+            height: 100vh;
+            left: calc(50vw - 1px);
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="controls">
+        <button id="circle">make circle</button>
+        <br>
+        <input type="range" id="wiel">
+        <label for="wiel">wielkość kulik</label>
+        <br>
+        <input type="range" min="3" max="30" id="ilo">
+        <label for="ilo">ilość kulek</label>
+        <br>
+        <input type="range" id="pro">
+        <label for="pro"> promień okręgu</label>
+    </div>
+    <div class="circleBox">
+
+    </div>
+
+    <div class="x"></div>
+    <div class="y"></div>
+
+
+</body>
+
+</html>
