@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/jq.js"></script>
+
+    <script>
+        $(document).ready(() => {
+            $(".middle").on("mousedown", () => {
+                $(window).on("mousemove", (e) => {
+                    let ofL = e.clientX - $(".slider").offset().left
+                    console.log(ofL)
+                    if (ofL >= 0 && ofL < Number($(".slider").width())) {
+                        $(".left").css("width", `${ofL}px `)
+                        $(".right").css("width", `${Number($(".slider").width()) - ofL - 40}px`)
+                    }
+
+                })
+                $(window).on("mouseup", () => {
+                    $(window).off("mousemove")
+                })
+
+            })
+
+            let lps = ["lp", "cena", "produkt"]
+            let ceny = ["5,60", "3,23", "7,45", "10,00", "3,20", "3,20", "3,20", "3,20"]
+            let produkty = ["chleb", "mąka", "masło", "kefir", "dżem", "dżem", "dżem", "dżem"]
+
+
+            $("button").on("click", () => {
+                $("table").empty()
+                let te = $("<tr>")
+                for (let i of lps) {
+                    let t = $("<td>").text(i)
+                    te.append(t)
+
+                }
+                $(".table").append(te)
+                for (let i in ceny) {
+
+                    let t = $("<td>").text(Number(i) + 1)
+                    let e = $("<td>").text(ceny[i])
+                    let m = $("<td>").text(produkty[i])
+                    let p = $("<tr>").append(t).append(e).append(m)
+                    $(".table").append(p)
+                }
+                let sum = 0
+                for (let i of ceny) {
+
+                    sum += parseFloat(i)
+                }
+
+                let temp = $("<td>").text(ceny.length + 1)
+                let tempo = $("<td>").text(sum)
+                let temporary = $("<tr>").append(temp).append(tempo)
+                $(".table").append(temporary)
+            })
+
+
+
+
+
+
+        })
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .slider {
+            height: 40px;
+            width: 400px;
+            position: absolute;
+            left: 200px;
+            top: 300px;
+            display: flex;
+            background-color: gray;
+        }
+
+        .middle {
+            width: 40px;
+            height: 40px;
+            background-color: black;
+        }
+
+        .left {
+            background-color: red;
+            height: 40px;
+            width: calc(50% - 20px);
+        }
+
+        .right {
+            background-color: green;
+            height: 40px;
+            width: calc(50% - 20px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="slider">
+        <div class="left"></div>
+        <div class="middle"></div>
+        <div class="right"></div>
+    </div>
+    <br>
+
+    <br>
+    <button>gen table</button> <br>
+
+    <table class="table">
+
+    </table>
+
+</body>
+
+</html>

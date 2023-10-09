@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/jq.js"></script>
+
+    <script>
+        $(document).ready(() => {
+            let tab = [{
+                type: "inteligencja interpersonalna",
+                c1: "f6ac55",
+                c2: "fa8a02",
+                size: 90
+            }, {
+                type: "inteligencja kinestetyczna",
+                c1: "3dc6f4",
+                c2: "0ebaea",
+                size: 80
+            }, {
+                type: "inteligencja muzyczna",
+                c1: "abd66d",
+                c2: "9fc25e",
+                size: 70
+            }, {
+                type: "inteligencja lingwistyczno-językowa",
+                c1: "f05156",
+                c2: "ff4b4c",
+                size: 60
+            }, {
+                type: "inteligencja wizualno-przestrzenna",
+                c1: "f8a0c6",
+                c2: "ff79aa",
+                size: 70
+            }, {
+                type: "inteligencja logiczno-matematyczna",
+                c1: "a06db0",
+                c2: "984190",
+                size: 80
+            }, {
+                type: "inteligencja intrapersonalna",
+                c1: "fdd542",
+                c2: "f5c300",
+                size: 90
+            }];
+            // $(".gen").on("click", () => {
+
+            for (let i = 0; i < tab.length; i++) {
+                let row = $("<tr>")
+
+                let index = $("<td>").text(tab[i].type)
+
+                let right = $('<div class="right">').css('width', `0%`).css("background-color", `#${tab[i].c2}`)
+                let left = $('<div class="left">').css('width', `100%`).css("background-color", `#${tab[i].c1}`)
+                let middle = $('<div class="middle">').text(tab[i].size)
+                let slider = $("<div class='slider'>").css("width", `${tab[i].size}px`)
+
+                slider.append(left).append(middle).append(right)
+                let sliderT = $("<td >").css("background-color", "gray").css("width", "100px").append(slider)
+                let cal = $("<td class='calc'>").text(tab[i].size)
+                $(".avg").css("width", `57px`)
+
+                row.append(index).append(sliderT).append(cal)
+
+                $(".table").append(row)
+
+            }
+            $(".middle").on("mousedown", (e) => {
+                console.log("aa")
+                let middle = e.target
+                let slider = $(e.target).parent()
+                let tr = slider.parent().parent()
+                let cal = tr.children(".calc")
+                //   console.log(cal)
+                let cRight = slider.children(".right")
+                let cLeft = slider.children(".left")
+
+                $(window).on("mousemove", (e) => {
+                    let sum = 0
+                    let lWidth = e.clientX - slider.offset().left
+                    if (lWidth > slider.width()) {
+                        lWidth = slider.width()
+                    }
+                    if (lWidth < 0) {
+                        lWidth = 0
+                    }
+                    //   console.log(lWidth)
+                    cLeft.css('width', `${lWidth - 10}px`)
+                    cRight.css('width', `${slider.width() - lWidth - 10}px`)
+                    cal.text(`${Math.round(lWidth)}`)
+                    $(middle).text(Math.round(lWidth))
+
+                    let lefts = $(".table").children("tr").children(".calc")
+                    console.log(lefts)
+                    for (let i = 0; i < lefts.length; i++) {
+
+                        let pr = $(lefts[i]).text()
+                        sum += Number(pr)
+
+                    }
+                    console.log(Math.round(sum) / 7)
+                    $(".avg").css("width", `${(Math.round(sum) / 7) - 20}px`)
+                    $(".dis").text(Math.round(Math.round(sum) / 7))
+                    if ((Math.round(sum) / 7) < 77 / 2) {
+                        $(".avg").css("background-color", `red`)
+                        $(".dis").css("background-color", `red`)
+                    }
+                    if ((Math.round(sum) / 7) > 77 / 2) {
+                        $(".avg").css("background-color", `green`)
+                        $(".dis").css("background-color", `green`)
+                    }
+
+                })
+                $(window).on("mouseup", () => {
+                    $(window).off("mousemove")
+                })
+            })
+        })
+
+        //    })
+    </script>
+
+
+    <style>
+        .slider {
+            width: 200px;
+            height: 20px;
+            background-color: gray;
+            display: flex;
+        }
+
+        .left {
+            width: calc(50% - 10px);
+            height: 20px;
+            background-color: red;
+        }
+
+        .right {
+            width: calc(50% - 10px);
+            height: 20px;
+            background-color: blue;
+        }
+
+        .middle {
+            color: white;
+            width: 20px;
+            height: 20px;
+            background-color: black;
+        }
+
+        .avg {
+            width: 200px;
+            height: 40px;
+            background-color: green;
+        }
+
+        .aa {
+            width: fit-content;
+            display: flex;
+        }
+
+        .dis {
+            width: 40px;
+            height: 40px;
+            background-color: green;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- <button class="gen">gen table</button> -->
+    <table class="table"></table>
+    <div class="aa">
+        <div class="avg"></div>
+        <div class="dis"></div>
+    </div>
+
+</body>
+
+</html>
