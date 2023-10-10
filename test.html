@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/jq.js"></script>
+    <script>
+        $(document).ready(() => {
+            let imgI = 0
+            let imgIn = [
+                { "lev": 0 },
+                { "lev": 0 },
+                { "lev": 0 },
+                { "lev": 0 },
+                { "lev": 0 },
+                { "lev": 0 },
+                { "lev": 0 },
+            ]
+            const tab = [
+                { id: 1, c1: "ff0000", c2: "fa8a02", name: "pn" },
+                { id: 2, c1: "3dc6f4", c2: "0ebaea", name: "wt" },
+                { id: 3, c1: "abd66d", c2: "9fc25e", name: "sr" },
+                { id: 4, c1: "f05156", c2: "ff0000", name: "cz" },
+                { id: 5, c1: "f8a0c6", c2: "ff79aa", name: "pt" },
+                { id: 6, c1: "a06db0", c2: "984190", name: "sb" },
+                { id: 7, c1: "fdd542", c2: "f5c300", name: "nd" }
+            ]
+            imgs = [
+                "http://admins.spec.pl.hostingasp.pl/Stefa%C5%84czyk_Dariusz/temp/weather/storm.png",
+                "http://admins.spec.pl.hostingasp.pl/Stefa%C5%84czyk_Dariusz/temp/weather/rain.png",
+                "http://admins.spec.pl.hostingasp.pl/Stefa%C5%84czyk_Dariusz/temp/weather/clouds.png",
+                "http://admins.spec.pl.hostingasp.pl/Stefa%C5%84czyk_Dariusz/temp/weather/cloud.png",
+                "http://admins.spec.pl.hostingasp.pl/Stefa%C5%84czyk_Dariusz/temp/weather/sun.png",
+            ]
+            let table = $(".table")
+            for (let i = 0; i < 3; i++) {
+
+                if (i == 0) {
+                    let row = $("<tr>")
+                    for (let y = 0; y < tab.length; y++) {
+                        let el = $("<td>").text(tab[y].name)
+                        $(row).append(el)
+                    }
+                    $(table).append(row)
+
+                }
+                if (i == 1) {
+                    let row = $("<tr class='imgt'>")
+                    for (let y = 0; y < tab.length; y++) {
+
+                        let img = $("<img>").attr("src", imgs[0]);
+                        let el = $("<td class='imgs'>").append(img)
+                        $(row).append(el)
+                    }
+                    $(table).append(row)
+
+                }
+                if (i == 2) {
+                    let row = $("<tr>")
+                    for (let y = 0; y < tab.length; y++) {
+                        let top = $("<div class='top'>").css("background-color", `#${tab[y].c1}`)
+                        let bottom = $("<div class='bottom'>").css("background-color", `#${tab[y].c1}`)
+                        let middle = $("<div class='middle'>").css("background-color", `#${tab[y].c2}`).text(1)
+                        let slider = $("<div class='slider'>")
+
+                        $(slider).append(top).append(middle).append(bottom)
+
+
+
+                        let el = $("<td calss='sl'>")
+                        $(el).append(slider)
+                        $(row).append(el)
+                    }
+                    $(table).append(row)
+
+                }
+
+            }
+            let avgTd = $("<td class='avg' colspan='7'>").css("height", "40px")
+            let img = $("<img>").attr("src", imgs[0])
+            let div = $("<div class='img'>").append(img)
+            $(avgTd).append("<h3>srednia pogoda w tygodniu</h3>").append(div)
+            let avgTr = $("<tr>").append(avgTd)
+            $(table).append(avgTr)
+
+
+
+            $(".middle").on("mousedown", (e) => {
+                let middle = e.target
+                let slider = $(middle).parent()
+                let top = $(slider).children(".top")
+                let bottom = $(slider).children(".bottom")
+                let tela = $(slider).parent().parent().parent()
+                let img = $(tela).children(".imgt").children()
+
+                let tr = $(slider).parent()
+                let inn = $(tr).index()
+                console.log(inn)
+                $(window).on("mousemove", (e) => {
+                    let Hoffset = e.clientY - slider.offset().top
+
+                    if (Hoffset > 200) {
+                        Hoffset = 200
+                    }
+                    if (Hoffset < 0) {
+                        Hoffset = 0
+                    }
+
+                    console.log(Hoffset);
+                    $(top).css('height', `${Hoffset - 10}px`)
+                    $(bottom).css('height', `${slider.height() - Hoffset - 10}px`)
+                    imgI = 5 - Math.round(Hoffset / 50)
+
+
+                    imgIn[inn] = imgI
+
+                    for (let t = 0; t < tab.length; t++) {
+                        if (t == inn) {
+                            console.log(t);
+                            console.log(imgI);
+                            let im = $('<img>').attr('src', imgs[imgIn[inn] - 1])
+                            $(img[inn]).empty()
+                            $(img[inn]).append(im)
+                        }
+                    }
+
+
+
+                    $(middle).text(imgI)
+
+                    let sum = 0
+
+                    for (let r = 0; r < 7; r++) {
+                        if (typeof imgIn[r] == "number") {
+                            sum += imgIn[r]
+
+                        }
+                    }
+
+                    let avv = Math.round(sum / 7)
+                    $(".img").children("img").attr("src", imgs[avv - 1])
+                })
+
+
+                $(window).on("mouseup", () => {
+                    $(window).off("mousemove")
+                })
+            })
+
+
+
+
+
+        })
+    </script>
+
+    <style>
+        * {
+            user-select: none;
+        }
+
+        td {
+            border: gray 1px dotted;
+        }
+
+
+        .slider {
+            height: 200px;
+            width: 20px;
+            display: flex;
+            flex-direction: column
+        }
+
+        .top {
+            height: calc(100% - 10px);
+            width: 20px;
+        }
+
+        .middle {
+            height: 20px;
+            width: 20px;
+        }
+
+        img {
+            height: 20px;
+            width: 20px;
+        }
+
+        .bottom {
+            height: 0;
+            width: 20px;
+        }
+
+        .img {
+            width: 100%;
+
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <table class="table"></table>
+
+</body>
+
+</html>
